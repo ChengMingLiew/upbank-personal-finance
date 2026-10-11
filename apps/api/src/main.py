@@ -2,7 +2,7 @@
 # How messages communicate
 
 from fastapi import FastAPI
-from src.routers import auth, connections
+from src.routers import auth, connections, sync
 
 app = FastAPI(title="UpBank Personal API")
 
@@ -12,3 +12,4 @@ def health_check():
 
 app.include_router(auth.router, tags=["auth"])
 app.include_router(connections.router, prefix="/connections", tags=["connections"])
+app.include_router(sync.router, prefix="/sync", tags=["sync"])
