@@ -2,11 +2,13 @@
 # How messages communicate
 
 from fastapi import FastAPI
-from sqlalchemy import text
-from src.database import engine
+from src.routers import auth, connections
 
 app = FastAPI(title="UpBank Personal API")
 
 @app.get("/health")
 def health_check():
         return {"status": "ok"}
+
+app.include_router(auth.router, tags=["auth"])
+app.include_router(connections.router, prefix="/connections", tags=["connections"])

@@ -1,0 +1,22 @@
+from fastapi import APIRouter
+from fastapi_users import schemas
+from src.services.auth import fastapi_users, auth_backend
+from src.models.user import User
+
+class UserRead(schemas.BaseUser[str]):
+    pass
+
+class UserCreate(schemas.BaseUserCreate):
+    pass
+
+router = APIRouter()
+
+router.include_router(
+    fastapi_users.get_auth_router(auth_backend),
+    prefix="/auth/jwt",
+)
+
+router.include_router(
+    fastapi_users.get_register_router(UserRead, UserCreate),
+    prefix="/auth",
+)
