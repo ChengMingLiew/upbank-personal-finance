@@ -2,6 +2,7 @@ from datetime import timedelta
 
 from sqlalchemy import func
 from up_bank_sdk import AuthenticationError, RateLimitError, ServerError
+from requests.exceptions import ConnectionError, Timeout
 
 from src.database import SessionLocal
 from src.jobs.celery_app import celery_app
@@ -13,7 +14,7 @@ from src.services.up_client import NoActiveConnection, get_up_client
 
 @celery_app.task(
     bind=True,
-    autoretry_for=(RateLimitError, ServerError),
+    autoretry_for=(RateLimitError, ServerError, ConnectionError, Timeout),
     retry_backoff=True,
     retry_backoff_max=600,
     retry_jitter=True,
