@@ -1,12 +1,12 @@
-from fastapi import APIRouter, HTTPException, Depends 
+from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
-from up_bank_sdk import Client, AuthenticationError
+from up_bank_sdk import AuthenticationError, Client
 
-from src.services.encryption import encrypt_token
-from src.services.auth import current_active_user
-from src.models.user import User
 from src.database import SessionLocal
 from src.models.up_connection import UpConnection
+from src.models.user import User
+from src.services.auth import current_active_user
+from src.services.encryption import encrypt_token
 
 router = APIRouter()
 

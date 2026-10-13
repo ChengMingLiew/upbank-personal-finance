@@ -1,22 +1,13 @@
+import os
+import sys
 from logging.config import fileConfig
-
-from sqlalchemy import engine_from_config
-from sqlalchemy import pool
 
 from alembic import context
 
-import sys
-import os
 sys.path.append(os.getcwd())
 
-from src.config import settings
 from src.database import engine
-
 from src.models.base import Base
-from src.models.user import User
-from src.models.up_connection import UpConnection
-from src.models.account import Account
-from src.models.transaction import Transaction
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

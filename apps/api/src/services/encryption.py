@@ -1,6 +1,8 @@
+import base64
+
 import nacl.secret
 import nacl.utils
-import base64
+
 from src.config import settings
 
 _key = bytes.fromhex(settings.ENCRYPTION_KEY)

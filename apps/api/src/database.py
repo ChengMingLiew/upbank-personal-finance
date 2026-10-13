@@ -2,8 +2,9 @@
 
 
 from sqlalchemy import create_engine
+from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
+
 from src.config import settings
 
 engine = create_engine(settings.DATABASE_URL) # the connection to the postgres database

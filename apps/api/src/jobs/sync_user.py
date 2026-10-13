@@ -1,12 +1,14 @@
 from datetime import timedelta
+
 from sqlalchemy import func
 from up_bank_sdk import AuthenticationError, RateLimitError, ServerError
+
 from src.database import SessionLocal
 from src.jobs.celery_app import celery_app
 from src.models.transaction import Transaction
 from src.models.up_connection import UpConnection
 from src.services.sync import sync_accounts, sync_transactions
-from src.services.up_client import get_up_client, NoActiveConnection
+from src.services.up_client import NoActiveConnection, get_up_client
 
 
 @celery_app.task(

@@ -2,7 +2,8 @@
 # How messages communicate
 
 from fastapi import FastAPI
-from src.routers import auth, connections, sync, accounts, transactions
+
+from src.routers import accounts, auth, connections, summary, sync, transactions
 
 app = FastAPI(title="UpBank Personal API")
 
@@ -15,3 +16,4 @@ app.include_router(connections.router, prefix="/connections", tags=["connections
 app.include_router(sync.router, prefix="/sync", tags=["sync"])
 app.include_router(accounts.router, prefix="/accounts", tags=["accounts"])
 app.include_router(transactions.router, prefix="/transactions", tags=["transactions"])
+app.include_router(summary.router, prefix="/summary", tags=["summary"])

@@ -1,6 +1,7 @@
 from celery import Celery
-from src.config import settings
 from celery.schedules import crontab
+
+from src.config import settings
 
 celery_app = Celery(
     "upbank-personal-finance",

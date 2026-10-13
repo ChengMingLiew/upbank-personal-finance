@@ -1,8 +1,11 @@
 from typing import Optional
+
 from fastapi import Request
 from fastapi_users import BaseUserManager, exceptions
-from src.models.user import User
+
 from src.config import settings
+from src.models.user import User
+
 
 class StringIDMixin:
 

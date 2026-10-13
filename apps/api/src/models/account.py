@@ -1,6 +1,8 @@
-from sqlalchemy import Column, String, BigInteger, DateTime, ForeignKey
+from sqlalchemy import BigInteger, Column, DateTime, ForeignKey, String
 from sqlalchemy.sql import func
+
 from src.models.base import Base
+
 
 class Account(Base):
 

@@ -1,7 +1,9 @@
 from sqlalchemy.orm import Session
 from up_bank_sdk import Client
+
 from src.models.up_connection import UpConnection
 from src.services.encryption import decrypt_token
+
 
 class NoActiveConnection(Exception):
     pass

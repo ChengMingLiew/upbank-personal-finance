@@ -1,12 +1,18 @@
-from fastapi_users.db import SQLAlchemyUserDatabase
 from fastapi import Depends
-from fastapi_users.authentication import AuthenticationBackend, BearerTransport, JWTStrategy
 from fastapi_users import FastAPIUsers
+from fastapi_users.authentication import (
+    AuthenticationBackend,
+    BearerTransport,
+    JWTStrategy,
+)
+from fastapi_users.db import SQLAlchemyUserDatabase
 from sqlalchemy.ext.asyncio import AsyncSession
-from src.models.user import User
-from src.services.user_manager import UserManager
+
 from src.config import settings
 from src.database import get_async_session
+from src.models.user import User
+from src.services.user_manager import UserManager
+
 
 async def get_user_db(session: AsyncSession = Depends(get_async_session)):
     yield SQLAlchemyUserDatabase(session, User)

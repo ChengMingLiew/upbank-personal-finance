@@ -1,7 +1,8 @@
 from fastapi import APIRouter
 from fastapi_users import schemas
-from src.services.auth import fastapi_users, auth_backend
-from src.models.user import User
+
+from src.services.auth import auth_backend, fastapi_users
+
 
 class UserRead(schemas.BaseUser[str]):
     pass

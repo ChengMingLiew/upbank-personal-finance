@@ -1,6 +1,7 @@
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.orm import Session
 from up_bank_sdk import Client
+
 from src.models.account import Account
 from src.models.transaction import Transaction
 

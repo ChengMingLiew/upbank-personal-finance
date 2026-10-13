@@ -1,7 +1,9 @@
-from sqlalchemy import Column, String, DateTime, ForeignKey
-from sqlalchemy import func
-from src.models.base import Base
 import uuid
+
+from sqlalchemy import Column, DateTime, ForeignKey, String, func
+
+from src.models.base import Base
+
 
 class UpConnection(Base):
 

@@ -1,8 +1,11 @@
 import uuid
+
 from fastapi_users.db import SQLAlchemyBaseUserTable
-from sqlalchemy import Column, String, DateTime
+from sqlalchemy import Column, DateTime, String
 from sqlalchemy.sql import func
+
 from src.models.base import Base
+
 
 class User(SQLAlchemyBaseUserTable[str], Base):
 

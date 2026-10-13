@@ -1,5 +1,7 @@
-from sqlalchemy import Column, String, BigInteger, DateTime, ForeignKey, Index
+from sqlalchemy import BigInteger, Column, DateTime, ForeignKey, Index, String
+
 from src.models.base import Base
+
 
 class Transaction(Base):
 
