@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends 
 from pydantic import BaseModel
-from up_bank_sdk import Client
+from up_bank_sdk import Client, AuthenticationError
+
 from src.services.encryption import encrypt_token
 from src.services.auth import current_active_user
 from src.models.user import User
@@ -17,7 +18,7 @@ def connect_up_account(body: ConnectRequest, user: User = Depends(current_active
     client = Client(body.token)
     try:
         client.util.ping()
-    except Exception:
+    except AuthenticationError:
         raise HTTPException(status_code=400, detail="Invalid Up Token")
 
     encrypted = encrypt_token(body.token)
