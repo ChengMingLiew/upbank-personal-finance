@@ -1,3 +1,17 @@
+x-api-common: &api-common
+  build:
+    context: ../apps/api
+  image: accounts-api:local
+  env_file: ../apps/api/.env
+  environment:
+    DATABASE_URL: postgresql+psycopg://postgres:postgres@db:5432/postgres-db
+    REDIS_URL: redis://:redis_password@redis:6379/0
+  depends_on:
+    db:
+      condition: service_healthy
+    redis:
+      condition: service_healthy
+
 services:
 
   db:
@@ -32,6 +46,20 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+
+  api:
+    <<: *api-common
+    command: sh -c "alembic upgrade head && uvicorn src.main:app --host 0.0.0.0 --port 8000"
+    ports:
+      - "8000:8000"
+
+  worker:
+    <<: *api-common
+    command: celery -A src.jobs.celery_app worker --loglevel=info --concurrency=2
+
+  beat:
+    <<: *api-common
+    command: celery -A src.jobs.celery_app beat --loglevel=info
       
 volumes:
   postgres_data:
