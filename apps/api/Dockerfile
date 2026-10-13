@@ -10,5 +10,8 @@ RUN uv sync --frozen --no-dev --no-install-project
 
 COPY . .
 
+RUN useradd --create-home --uid 1000 app
+USER app
+
 ENV PATH="/app/.venv/bin:$PATH" \
     PYTHONBUFFERED=1
