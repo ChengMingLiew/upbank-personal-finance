@@ -31,5 +31,5 @@ def test_tampered_ciphertext_is_rejected():
 
 
 def test_garbage_is_rejected():
-    with pytest.raises(Exception):
+    with pytest.raises((ValueError, CryptoError)):
         decrypt_token("not-valid-ciphertext")
