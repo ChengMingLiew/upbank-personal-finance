@@ -4,6 +4,8 @@ on:
   push:
     branches: [main]
     paths: ["apps/api/**", ".github/workflows/api-ci.yml"]
+  pull_request:
+    paths: ["apps/api/**", ".github/workflows/api-ci.yml"]
 
 jobs:
   test:
@@ -12,24 +14,24 @@ jobs:
         run:
           working-directory: apps/api
 
-  services:
-    postgres:
-      image: postgres:16-alpine
-      env:
-        POSTGRES_USER: postgres
-        POSTGRES_PASSWORD: ci_password
-        POSTGRES_DB: ci-db
-      ports: ["5432:5432"]
-      options: >-
-        --health-cmd "pg_is_ready -U postgres"
-        --health-interval 5s
-        --health-timeout 5s
-        --health-retries 10s
+      services:
+        postgres:
+          image: postgres:16-alpine
+          env:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: ci_password
+            POSTGRES_DB: ci-db
+          ports: ["5432:5432"]
+          options: >-
+            --health-cmd "pg_is_ready -U postgres"
+            --health-interval 5s
+            --health-timeout 5s
+            --health-retries 10s
 
-  env:
-    DATABSE_URL: postgresql+psycopg://postgres:ci_password@localhost:5432/ci_db
-    REDIS_URL: redis://ci_redis@localhost:6379/0
-    ENCRYPTION_KEY: "0000000000000000000000000000000000000000000000000000000000000000"
+      env:
+        DATABSE_URL: postgresql+psycopg://postgres:ci_password@localhost:5432/ci_db
+        REDIS_URL: redis://ci_redis@localhost:6379/0
+        ENCRYPTION_KEY: "0000000000000000000000000000000000000000000000000000000000000000"
 
   steps:
     - uses: actions/checkout@v4
