@@ -7,7 +7,6 @@ from src.services.encryption import decrypt_token, encrypt_token
 
 TOKEN = "up:yeah:test-token-1234567890"
 
-
 def test_round_trip():
     assert decrypt_token(encrypt_token(TOKEN)) == TOKEN
 
