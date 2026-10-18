@@ -1,8 +1,8 @@
 from datetime import timedelta
 
+from requests.exceptions import ConnectionError, Timeout
 from sqlalchemy import func
 from up_bank_sdk import AuthenticationError, RateLimitError, ServerError
-from requests.exceptions import ConnectionError, Timeout
 
 from src.database import SessionLocal
 from src.jobs.celery_app import celery_app

@@ -1,0 +1,49 @@
+name: api-ci
+
+on:
+  push:
+    branches: [main]
+    paths: ["apps/api/**", ".github/workflows/api-ci.yml"]
+  pull_request:
+    paths: ["apps/api/**", ".github/workflows/api-ci.yml"]
+
+jobs:
+  test:
+      runs-on: ubuntu-latest
+      defaults:
+        run:
+          working-directory: apps/api
+
+      services:
+        postgres:
+          image: postgres:16-alpine
+          env:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: ci_password
+            POSTGRES_DB: ci_db
+          ports: ["5432:5432"]
+          options: >-
+            --health-cmd "pg_isready -U postgres"
+            --health-interval 5s
+            --health-timeout 5s
+            --health-retries 10
+
+      env:
+        DATABASE_URL: postgresql+psycopg://postgres:ci_password@localhost:5432/ci_db
+        REDIS_URL: redis://:ci_redis@localhost:6379/0
+        ENCRYPTION_KEY: "0000000000000000000000000000000000000000000000000000000000000000"
+
+      steps:
+        - uses: actions/checkout@v5
+
+        - uses: astral-sh/setup-uv@v7
+
+        - run: uv sync --frozen
+
+        - run: uv run ruff check . 
+
+        - run: uv run pytest -v
+
+        - run: uv run alembic upgrade head
+
+        - run: uv run alembic check

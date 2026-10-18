@@ -7,7 +7,6 @@ from src.services.encryption import decrypt_token, encrypt_token
 
 TOKEN = "up:yeah:test-token-1234567890"
 
-
 def test_round_trip():
     assert decrypt_token(encrypt_token(TOKEN)) == TOKEN
 
@@ -31,5 +30,5 @@ def test_tampered_ciphertext_is_rejected():
 
 
 def test_garbage_is_rejected():
-    with pytest.raises(Exception):
+    with pytest.raises((ValueError, CryptoError)):
         decrypt_token("not-valid-ciphertext")
