@@ -23,18 +23,28 @@ def connect_up_account(body: ConnectRequest, user: User = Depends(current_active
 
     encrypted = encrypt_token(body.token)
 
-    db = SessionLocal()
-    try:
-        connection = UpConnection(
-            id=user.id,
-            user_id=user.id,
-            encrypted_token=encrypted,
-            status="active",
+    with SessionLocal() as db:
+
+        connection = (
+            db.query(UpConnection)
+              .filter(UpConnection.user_id == user.id)
+              .first()
         )
-
-        db.add(connection)
+        
+        if connection:
+            connection.encrypted_token = encrypted
+            connection.status = "active"
+            result = "reconnected"
+        else:
+            db.add(
+                UpConnection(
+                    user_id=user.id,
+                    encrypted_token=encrypted,
+                    status="active",
+                )
+            )
+            result = "connected"
         db.commit()
-    finally:
-        db.close()
+    db = SessionLocal()
 
-    return {"status": "connected"}
+    return {"status": result}
