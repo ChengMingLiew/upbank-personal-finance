@@ -34,9 +34,9 @@ jobs:
         ENCRYPTION_KEY: "0000000000000000000000000000000000000000000000000000000000000000"
 
       steps:
-        - uses: actions/checkout@v4
+        - uses: actions/checkout@v5
 
-        - uses: astral-sh/setup-uv@v5
+        - uses: astral-sh/setup-uv@v7
 
         - run: uv sync --frozen
 
